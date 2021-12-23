@@ -22,21 +22,18 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component';
-import Item from '@/components/Item.vue'; // @ is an alias to /src
+import { Item } from '@/components';
 
 @Options({
-  components: {
-    Item,
-  },
-  computed: {
-    left() {
-      return this.term
-        ? this.$store.getters.search(this.term)
-        : this.$store.state.left;
-    },
-  },
+  components: { Item },
 })
 export default class Home extends Vue {
-  term = ''
+  term = '';
+
+  get left(): Item[] {
+    return this.term
+      ? this.$store.getters.search(this.term)
+      : this.$store.state.left;
+  }
 }
 </script>

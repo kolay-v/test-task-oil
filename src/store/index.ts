@@ -22,13 +22,14 @@ export default createStore<State>({
     deletions: (state) => state.history.filter(({ type }) => type === 'del'),
 
     search: (state) => (term: string) => {
-      const results = state.left.map((item) => {
-        const searchString = [item.answer, ...item.clues].join('|');
-        const matches = [...searchString.matchAll(new RegExp(`${term}`, 'g'))];
+      const results: CountedItem[] = state.left.map((item: Item) => {
+        const searchString: string = [item.answer, ...item.clues].join(' ');
+        const matches = [...searchString.matchAll(new RegExp(`${term}`, 'gi'))];
         return { count: matches.length, item };
       })
         .filter(({ count }) => count)
         .sort((a, b) => b.count - a.count);
+
       return results.map(({ item }) => item);
     },
   },

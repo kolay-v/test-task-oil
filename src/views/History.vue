@@ -13,21 +13,18 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component';
-import Event from '@/components/Event.vue'; // @ is an alias to /src
+import { Event } from '@/components';
 
 @Options({
-  components: {
-    Event,
-  },
-  computed: {
-    events() {
-      switch (this.$route.params.mode) {
-        case 'add': return this.$store.getters.additions;
-        case 'del': return this.$store.getters.deletions;
-        default: return this.$store.state.history;
-      }
-    },
-  },
+  components: { Event },
 })
-export default class History extends Vue {}
+export default class History extends Vue {
+  get events(): Event[] {
+    switch (this.$route.params.mode) {
+      case 'add': return this.$store.getters.additions;
+      case 'del': return this.$store.getters.deletions;
+      default: return this.$store.state.history;
+    }
+  }
+}
 </script>

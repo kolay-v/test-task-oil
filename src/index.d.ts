@@ -13,3 +13,8 @@ interface Event {
   at: typeof Date
   item: Item
 }
+
+interface CountedItem {
+  count: number
+  item: Item
+}
